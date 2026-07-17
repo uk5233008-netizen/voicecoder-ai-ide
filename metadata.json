@@ -1,0 +1,6 @@
+{
+  "name": "VoiceCoder",
+  "description": "The world's first voice-controlled AI IDE. Speak your logic, see your code materialize in real-time.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}

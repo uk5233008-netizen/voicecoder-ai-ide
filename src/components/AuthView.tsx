@@ -1,0 +1,229 @@
+import React, { useState } from 'react';
+import { ViewType } from '../types';
+
+interface AuthViewProps {
+  setView: (view: ViewType) => void;
+}
+
+export default function AuthView({ setView }: AuthViewProps) {
+  const [authTab, setAuthTab] = useState<'login' | 'signup'>('login');
+  const [email, setEmail] = useState('dev@voicecoder.io');
+  const [password, setPassword] = useState('password123');
+
+  const handleSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    // Simulate successful login/signup and route to dashboard
+    setView('dashboard');
+  };
+
+  return (
+    <div className="flex flex-col w-full p-margin-mobile relative min-h-screen justify-center items-center bg-slate-50">
+      {/* Subtle Animated Background Decor */}
+      <div className="fixed inset-0 pointer-events-none opacity-30 overflow-hidden z-0">
+        <svg className="w-full h-full" viewBox="0 0 100 100">
+          <defs>
+            <pattern height="10" id="grid" patternUnits="userSpaceOnUse" width="10">
+              <path
+                className="text-slate-200"
+                d="M 10 0 L 0 0 0 10"
+                fill="none"
+                stroke="currentColor"
+                strokeWidth="0.1"
+              ></path>
+            </pattern>
+          </defs>
+          <rect fill="url(#grid)" height="100%" width="100%"></rect>
+          <g className="opacity-50">
+            <circle className="text-blue-200" cx="20" cy="30" fill="currentColor" r="0.5"></circle>
+            <circle className="text-blue-200" cx="80" cy="70" fill="currentColor" r="0.5"></circle>
+            <circle className="text-indigo-200" cx="50" cy="10" fill="currentColor" r="0.8"></circle>
+          </g>
+        </svg>
+      </div>
+
+      <div className="relative z-10 flex flex-col items-center justify-center w-full max-w-md mx-auto py-12">
+        {/* Brand Header */}
+        <div className="flex flex-col items-center mb-8">
+          <div className="w-12 h-12 bg-blue-600 rounded-xl flex items-center justify-center shadow-lg mb-4">
+            <span
+              className="material-symbols-outlined text-white text-3xl select-none"
+              style={{ fontVariationSettings: "'FILL' 1" }}
+            >
+              mic
+            </span>
+          </div>
+          <h1 className="font-headline-lg-mobile text-2xl text-slate-900 mb-1 font-bold">
+            {authTab === 'login' ? 'Welcome Back' : 'Create Account'}
+          </h1>
+          <p className="font-body-md text-body-md text-slate-500 text-center px-6 min-h-[40px]">
+            {authTab === 'login'
+              ? 'Your voice is your most powerful development tool.'
+              : 'Join 50,000+ developers shipping faster with VoiceCoder.'}
+          </p>
+        </div>
+
+        {/* Auth Card */}
+        <div className="w-full bg-white rounded-xl overflow-hidden shadow-md border border-slate-200">
+          {/* Tabs */}
+          <div className="flex w-full bg-slate-50 border-b border-slate-200">
+            <button
+              onClick={() => setAuthTab('login')}
+              className={`flex-1 py-4 font-label-sm text-xs uppercase tracking-wider transition-all duration-300 cursor-pointer font-bold ${
+                authTab === 'login'
+                  ? 'text-blue-600 border-b-2 border-blue-600 bg-white'
+                  : 'text-slate-400 border-b-2 border-transparent hover:text-slate-600'
+              }`}
+            >
+              Login
+            </button>
+            <button
+              onClick={() => setAuthTab('signup')}
+              className={`flex-1 py-4 font-label-sm text-xs uppercase tracking-wider transition-all duration-300 cursor-pointer font-bold ${
+                authTab === 'signup'
+                  ? 'text-blue-600 border-b-2 border-blue-600 bg-white'
+                  : 'text-slate-400 border-b-2 border-transparent hover:text-slate-600'
+              }`}
+            >
+              Sign Up
+            </button>
+          </div>
+
+          <div className="p-8">
+            <form className="space-y-6" onSubmit={handleSubmit}>
+              {/* Email Field */}
+              <div className="space-y-2">
+                <label className="font-label-sm text-xs font-semibold text-slate-600 ml-1 block">Work Email</label>
+                <div className="relative group">
+                  <span className="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-slate-400 text-lg group-focus-within:text-blue-600 transition-colors select-none">
+                    mail
+                  </span>
+                  <input
+                    className="w-full bg-slate-50 font-body-md text-body-md text-slate-900 pl-10 pr-4 py-3 rounded-lg outline-none focus:ring-1 focus:ring-blue-500 border border-slate-200 focus:border-blue-500 focus:bg-white transition-all placeholder:text-slate-400"
+                    placeholder="dev@voicecoder.io"
+                    type="email"
+                    required
+                    value={email}
+                    onChange={(e) => setEmail(e.target.value)}
+                  />
+                </div>
+              </div>
+
+              {/* Password Field */}
+              <div className="space-y-2">
+                <div className="flex justify-between items-center px-1">
+                  <label className="font-label-sm text-xs font-semibold text-slate-600">Password</label>
+                  <a
+                    className="font-label-sm text-xs text-blue-600 hover:underline"
+                    href="#"
+                    onClick={(e) => {
+                      e.preventDefault();
+                      alert('Password reset link sent (simulated).');
+                    }}
+                  >
+                    Forgot?
+                  </a>
+                </div>
+                <div className="relative group">
+                  <span className="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-slate-400 text-lg group-focus-within:text-blue-600 transition-colors select-none">
+                    lock
+                  </span>
+                  <input
+                    className="w-full bg-slate-50 font-body-md text-body-md text-slate-900 pl-10 pr-4 py-3 rounded-lg outline-none focus:ring-1 focus:ring-blue-500 border border-slate-200 focus:border-blue-500 focus:bg-white transition-all placeholder:text-slate-400"
+                    placeholder="••••••••"
+                    type="password"
+                    required
+                    value={password}
+                    onChange={(e) => setPassword(e.target.value)}
+                  />
+                </div>
+              </div>
+
+              <button
+                className="w-full py-3.5 bg-blue-600 hover:bg-blue-700 text-white font-semibold rounded-lg shadow-md active:scale-[0.98] transition-transform flex items-center justify-center gap-2 cursor-pointer font-medium"
+                type="submit"
+              >
+                {authTab === 'login' ? 'Continue' : 'Create Account'}
+                <span className="material-symbols-outlined text-lg">arrow_forward</span>
+              </button>
+            </form>
+
+            {/* Divider */}
+            <div className="relative my-8 flex items-center">
+              <div className="flex-grow h-px bg-slate-200"></div>
+              <span className="flex-shrink mx-4 font-label-sm text-[10px] text-slate-400 font-bold uppercase tracking-wider select-none">
+                Or continue with
+              </span>
+              <div className="flex-grow h-px bg-slate-200"></div>
+            </div>
+
+            {/* OAuth Grid */}
+            <div className="grid grid-cols-2 gap-4">
+              <button
+                onClick={() => setView('dashboard')}
+                className="flex items-center justify-center gap-2 py-3 bg-white hover:bg-slate-50 rounded-lg transition-colors group cursor-pointer border border-slate-200"
+              >
+                <svg className="w-5 h-5 group-hover:scale-110 transition-transform" viewBox="0 0 24 24">
+                  <path
+                    d="M12 .297c-6.63 0-12 5.373-12 12 0 5.303 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61C4.422 18.07 3.633 17.7 3.633 17.7c-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.399 3-.405 1.02.006 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 22.092 24 17.592 24 12.297c0-6.627-5.373-12-12-12"
+                    fill="currentColor"
+                  ></path>
+                </svg>
+                <span className="font-body-md text-body-md text-slate-700">GitHub</span>
+              </button>
+              <button
+                onClick={() => setView('dashboard')}
+                className="flex items-center justify-center gap-2 py-3 bg-white hover:bg-slate-50 rounded-lg transition-colors group cursor-pointer border border-slate-200"
+              >
+                <svg className="w-5 h-5 group-hover:scale-110 transition-transform" viewBox="0 0 24 24">
+                  <path
+                    d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"
+                    fill="#4285F4"
+                  ></path>
+                  <path
+                    d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"
+                    fill="#34A853"
+                  ></path>
+                  <path
+                    d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l3.66-2.84z"
+                    fill="#FBBC05"
+                  ></path>
+                  <path
+                    d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.14-4.53z"
+                    fill="#EA4335"
+                  ></path>
+                </svg>
+                <span className="font-body-md text-body-md text-slate-700">Google</span>
+              </button>
+            </div>
+          </div>
+        </div>
+
+        {/* Footer Help */}
+        <p className="mt-8 font-body-md text-body-md text-slate-500 text-center leading-relaxed">
+          By continuing, you agree to our <br />
+          <a
+            className="text-blue-600 hover:underline font-semibold"
+            href="#"
+            onClick={(e) => {
+              e.preventDefault();
+              alert('Terms of Service (Simulated)');
+            }}
+          >
+            Terms of Service
+          </a>{' '}
+          &{' '}
+          <a
+            className="text-blue-600 hover:underline font-semibold"
+            href="#"
+            onClick={(e) => {
+              e.preventDefault();
+              alert('Privacy Policy (Simulated)');
+            }}
+          >
+            Privacy Policy
+          </a>
+        </p>
+      </div>
+    </div>
+  );
+}
